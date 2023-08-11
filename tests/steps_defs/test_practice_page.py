@@ -1,6 +1,6 @@
 import time
 
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
@@ -41,6 +41,22 @@ def test_switch_window_example(driver):
     except TimeoutException:
         print(" Test failed. The expected text was not found in the popup window.")
     driver.close()
+    time.sleep(5)
+
+
+def test_switch_tab_example(driver):
+    page = PracticePage(driver)
+    page.click_switch_tab_btn()
+    driver.switch_to.window(driver.window_handles[-1])
+    time.sleep(5)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(5)
+    try:
+        EC.visibility_of_element_located(page.get_all_courses_btn())
+        driver.save_screenshot("button-test.png")  # Take screenshot if the button is present
+    except NoSuchElementException:
+        print(" Button its not present in the page. ")
+    driver.switch_to.window(driver.window_handles[0])
     time.sleep(5)
 
 

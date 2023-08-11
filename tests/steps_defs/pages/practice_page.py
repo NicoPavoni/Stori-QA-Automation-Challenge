@@ -30,6 +30,8 @@ class PracticePage(BasePage):
     ALERT_BTN = (By.ID, 'alertbtn')
     CONFIRM_BTN = (By.ID, 'confirmbtn')
     SWITCH_WINDOW_BTN = (By.XPATH, '//*[@id="openwindow"]')
+    SWITCH_TAB_BTN = (By.XPATH, '//*[@id="opentab"]')
+    VIEW_ALL_COURSES_BTN = (By.XPATH, '/html/body/div/div[2]/section[4]/div[2]/a')
 
     def get_country_input(self):
         return self.driver.find_element(*self.COUNTRIES_INPUT)
@@ -49,6 +51,12 @@ class PracticePage(BasePage):
     def get_switch_window_btn(self):
         return self.driver.find_element(*self.SWITCH_WINDOW_BTN)
 
+    def get_switch_tab_btn(self):
+        return self.driver.find_element(*self.SWITCH_TAB_BTN)
+
+    def get_all_courses_btn(self):
+        return self.driver.find_element(*self.VIEW_ALL_COURSES_BTN)
+
     def get_country_option(self, country):
         locator = (By.XPATH, '//li/div[text()="{}"]'.format(country))
         return self.find_visible_element(locator)
@@ -63,7 +71,6 @@ class PracticePage(BasePage):
 
     def enter_alert_text(self, text):
         alert_input = self.get_alert_input()
-        alert_input.click()
         alert_input.send_keys(text)
 
     def click_alert_btn(self):
@@ -74,6 +81,12 @@ class PracticePage(BasePage):
 
     def click_switch_window_btn(self):
         self.get_switch_window_btn().click()
+
+    def click_switch_tab_btn(self):
+        self.get_switch_tab_btn().click()
+
+    def click_view_all_courses_btn(self):
+        self.get_all_courses_btn().click()
 
     def get_alert(self):
         return self.driver.switch_to.alert
