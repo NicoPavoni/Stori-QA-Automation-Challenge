@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="5" failures="0" skipped="0" tests="5" time="4.270" timestamp="2023-08-11T15:46:42.441151" hostname="DESKTOP-MV3C7HI"><testcase classname="tests.steps_defs.test_practice_page" name="test_select_country_mexico" time="0.837"><error message="failed on setup with &quot;ValueError: response body:&#10;{&quot;message&quot;:&quot;API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting&quot;}&#10;&#10;request url:&#10;https://api.github.com/repos/mozilla/geckodriver/releases/latest&#10;response headers:&#10;{'Date': 'Fri, 11 Aug 2023 18:46:43 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': &quot;default-src 'none'; style-src 'unsafe-inline'&quot;, 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779912', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E69D:5688:196D639:1AC13CB:64D68213'}&quot;">request = &lt;SubRequest 'browser' for &lt;Function test_select_country_mexico&gt;&gt;
+
+    @pytest.fixture
+    def browser(request):
+        browser_choice = request.config.getoption(BROWSER_OPTION)
+    
+        if browser_choice.lower() == "firefox":
+&gt;           browser = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+
+..\..\..\..\stori\Stori-QA-Automation-Challenge\conftest.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\firefox.py:39: in install
+    driver_path = self._get_driver_binary_path(self.driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\manager.py:35: in _get_driver_binary_path
+    binary_path = self._cache_manager.find_driver(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:105: in find_driver
+    driver_version = self.get_cache_key_driver_version(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:151: in get_cache_key_driver_version
+    return driver.get_driver_version_to_download()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver.py:48: in get_driver_version_to_download
+    return self.get_latest_release_version()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\drivers\firefox.py:29: in get_latest_release_version
+    resp = self._http_client.get(
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:36: in get
+    self.validate_response(resp)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+resp = &lt;Response [403]&gt;
+
+    @staticmethod
+    def validate_response(resp: requests.Response):
+        status_code = resp.status_code
+        if status_code == 404:
+            raise ValueError(f"There is no such driver by url {resp.url}")
+        elif status_code == 401:
+            raise ValueError(f"API Rate limit exceeded. You have to add GH_TOKEN!!!")
+        elif resp.status_code != 200:
+&gt;           raise ValueError(
+                f"response body:\n{resp.text}\n"
+                f"request url:\n{resp.request.url}\n"
+                f"response headers:\n{dict(resp.headers)}\n"
+            )
+E           ValueError: response body:
+E           {"message":"API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)","documentation_url":"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"}
+E           
+E           request url:
+E           https://api.github.com/repos/mozilla/geckodriver/releases/latest
+E           response headers:
+E           {'Date': 'Fri, 11 Aug 2023 18:46:43 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'", 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779912', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E69D:5688:196D639:1AC13CB:64D68213'}
+
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:19: ValueError</error></testcase><testcase classname="tests.steps_defs.test_practice_page" name="test_dropdown_option_updates" time="0.822"><error message="failed on setup with &quot;ValueError: response body:&#10;{&quot;message&quot;:&quot;API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting&quot;}&#10;&#10;request url:&#10;https://api.github.com/repos/mozilla/geckodriver/releases/latest&#10;response headers:&#10;{'Date': 'Fri, 11 Aug 2023 18:46:44 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': &quot;default-src 'none'; style-src 'unsafe-inline'&quot;, 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779912', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E69F:6B56:1BF9B85:1D5E670:64D68214'}&quot;">request = &lt;SubRequest 'browser' for &lt;Function test_dropdown_option_updates&gt;&gt;
+
+    @pytest.fixture
+    def browser(request):
+        browser_choice = request.config.getoption(BROWSER_OPTION)
+    
+        if browser_choice.lower() == "firefox":
+&gt;           browser = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+
+..\..\..\..\stori\Stori-QA-Automation-Challenge\conftest.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\firefox.py:39: in install
+    driver_path = self._get_driver_binary_path(self.driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\manager.py:35: in _get_driver_binary_path
+    binary_path = self._cache_manager.find_driver(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:105: in find_driver
+    driver_version = self.get_cache_key_driver_version(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:151: in get_cache_key_driver_version
+    return driver.get_driver_version_to_download()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver.py:48: in get_driver_version_to_download
+    return self.get_latest_release_version()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\drivers\firefox.py:29: in get_latest_release_version
+    resp = self._http_client.get(
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:36: in get
+    self.validate_response(resp)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+resp = &lt;Response [403]&gt;
+
+    @staticmethod
+    def validate_response(resp: requests.Response):
+        status_code = resp.status_code
+        if status_code == 404:
+            raise ValueError(f"There is no such driver by url {resp.url}")
+        elif status_code == 401:
+            raise ValueError(f"API Rate limit exceeded. You have to add GH_TOKEN!!!")
+        elif resp.status_code != 200:
+&gt;           raise ValueError(
+                f"response body:\n{resp.text}\n"
+                f"request url:\n{resp.request.url}\n"
+                f"response headers:\n{dict(resp.headers)}\n"
+            )
+E           ValueError: response body:
+E           {"message":"API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)","documentation_url":"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"}
+E           
+E           request url:
+E           https://api.github.com/repos/mozilla/geckodriver/releases/latest
+E           response headers:
+E           {'Date': 'Fri, 11 Aug 2023 18:46:44 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'", 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779912', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E69F:6B56:1BF9B85:1D5E670:64D68214'}
+
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:19: ValueError</error></testcase><testcase classname="tests.steps_defs.test_practice_page" name="test_switch_window_example" time="0.805"><error message="failed on setup with &quot;ValueError: response body:&#10;{&quot;message&quot;:&quot;API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting&quot;}&#10;&#10;request url:&#10;https://api.github.com/repos/mozilla/geckodriver/releases/latest&#10;response headers:&#10;{'Date': 'Fri, 11 Aug 2023 18:46:45 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': &quot;default-src 'none'; style-src 'unsafe-inline'&quot;, 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779913', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E6A1:6EA9:A198AC:A9FDCF:64D68215'}&quot;">request = &lt;SubRequest 'browser' for &lt;Function test_switch_window_example&gt;&gt;
+
+    @pytest.fixture
+    def browser(request):
+        browser_choice = request.config.getoption(BROWSER_OPTION)
+    
+        if browser_choice.lower() == "firefox":
+&gt;           browser = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+
+..\..\..\..\stori\Stori-QA-Automation-Challenge\conftest.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\firefox.py:39: in install
+    driver_path = self._get_driver_binary_path(self.driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\manager.py:35: in _get_driver_binary_path
+    binary_path = self._cache_manager.find_driver(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:105: in find_driver
+    driver_version = self.get_cache_key_driver_version(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:151: in get_cache_key_driver_version
+    return driver.get_driver_version_to_download()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver.py:48: in get_driver_version_to_download
+    return self.get_latest_release_version()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\drivers\firefox.py:29: in get_latest_release_version
+    resp = self._http_client.get(
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:36: in get
+    self.validate_response(resp)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+resp = &lt;Response [403]&gt;
+
+    @staticmethod
+    def validate_response(resp: requests.Response):
+        status_code = resp.status_code
+        if status_code == 404:
+            raise ValueError(f"There is no such driver by url {resp.url}")
+        elif status_code == 401:
+            raise ValueError(f"API Rate limit exceeded. You have to add GH_TOKEN!!!")
+        elif resp.status_code != 200:
+&gt;           raise ValueError(
+                f"response body:\n{resp.text}\n"
+                f"request url:\n{resp.request.url}\n"
+                f"response headers:\n{dict(resp.headers)}\n"
+            )
+E           ValueError: response body:
+E           {"message":"API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)","documentation_url":"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"}
+E           
+E           request url:
+E           https://api.github.com/repos/mozilla/geckodriver/releases/latest
+E           response headers:
+E           {'Date': 'Fri, 11 Aug 2023 18:46:45 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'", 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779913', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E6A1:6EA9:A198AC:A9FDCF:64D68215'}
+
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:19: ValueError</error></testcase><testcase classname="tests.steps_defs.test_practice_page" name="test_alert_pops_up" time="0.795"><error message="failed on setup with &quot;ValueError: response body:&#10;{&quot;message&quot;:&quot;API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting&quot;}&#10;&#10;request url:&#10;https://api.github.com/repos/mozilla/geckodriver/releases/latest&#10;response headers:&#10;{'Date': 'Fri, 11 Aug 2023 18:46:46 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': &quot;default-src 'none'; style-src 'unsafe-inline'&quot;, 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779913', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E6A2:3B62:7D6B40:83C1C7:64D68216'}&quot;">request = &lt;SubRequest 'browser' for &lt;Function test_alert_pops_up&gt;&gt;
+
+    @pytest.fixture
+    def browser(request):
+        browser_choice = request.config.getoption(BROWSER_OPTION)
+    
+        if browser_choice.lower() == "firefox":
+&gt;           browser = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+
+..\..\..\..\stori\Stori-QA-Automation-Challenge\conftest.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\firefox.py:39: in install
+    driver_path = self._get_driver_binary_path(self.driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\manager.py:35: in _get_driver_binary_path
+    binary_path = self._cache_manager.find_driver(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:105: in find_driver
+    driver_version = self.get_cache_key_driver_version(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:151: in get_cache_key_driver_version
+    return driver.get_driver_version_to_download()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver.py:48: in get_driver_version_to_download
+    return self.get_latest_release_version()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\drivers\firefox.py:29: in get_latest_release_version
+    resp = self._http_client.get(
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:36: in get
+    self.validate_response(resp)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+resp = &lt;Response [403]&gt;
+
+    @staticmethod
+    def validate_response(resp: requests.Response):
+        status_code = resp.status_code
+        if status_code == 404:
+            raise ValueError(f"There is no such driver by url {resp.url}")
+        elif status_code == 401:
+            raise ValueError(f"API Rate limit exceeded. You have to add GH_TOKEN!!!")
+        elif resp.status_code != 200:
+&gt;           raise ValueError(
+                f"response body:\n{resp.text}\n"
+                f"request url:\n{resp.request.url}\n"
+                f"response headers:\n{dict(resp.headers)}\n"
+            )
+E           ValueError: response body:
+E           {"message":"API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)","documentation_url":"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"}
+E           
+E           request url:
+E           https://api.github.com/repos/mozilla/geckodriver/releases/latest
+E           response headers:
+E           {'Date': 'Fri, 11 Aug 2023 18:46:46 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'", 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779913', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E6A2:3B62:7D6B40:83C1C7:64D68216'}
+
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:19: ValueError</error></testcase><testcase classname="tests.steps_defs.test_practice_page" name="test_alert_pops_up_and_confirm_it" time="0.806"><error message="failed on setup with &quot;ValueError: response body:&#10;{&quot;message&quot;:&quot;API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting&quot;}&#10;&#10;request url:&#10;https://api.github.com/repos/mozilla/geckodriver/releases/latest&#10;response headers:&#10;{'Date': 'Fri, 11 Aug 2023 18:46:46 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': &quot;default-src 'none'; style-src 'unsafe-inline'&quot;, 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779912', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E6A4:5E5D:16E5FD0:180C112:64D68216'}&quot;">request = &lt;SubRequest 'browser' for &lt;Function test_alert_pops_up_and_confirm_it&gt;&gt;
+
+    @pytest.fixture
+    def browser(request):
+        browser_choice = request.config.getoption(BROWSER_OPTION)
+    
+        if browser_choice.lower() == "firefox":
+&gt;           browser = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+
+..\..\..\..\stori\Stori-QA-Automation-Challenge\conftest.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\firefox.py:39: in install
+    driver_path = self._get_driver_binary_path(self.driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\manager.py:35: in _get_driver_binary_path
+    binary_path = self._cache_manager.find_driver(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:105: in find_driver
+    driver_version = self.get_cache_key_driver_version(driver)
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver_cache.py:151: in get_cache_key_driver_version
+    return driver.get_driver_version_to_download()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\driver.py:48: in get_driver_version_to_download
+    return self.get_latest_release_version()
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\drivers\firefox.py:29: in get_latest_release_version
+    resp = self._http_client.get(
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:36: in get
+    self.validate_response(resp)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+resp = &lt;Response [403]&gt;
+
+    @staticmethod
+    def validate_response(resp: requests.Response):
+        status_code = resp.status_code
+        if status_code == 404:
+            raise ValueError(f"There is no such driver by url {resp.url}")
+        elif status_code == 401:
+            raise ValueError(f"API Rate limit exceeded. You have to add GH_TOKEN!!!")
+        elif resp.status_code != 200:
+&gt;           raise ValueError(
+                f"response body:\n{resp.text}\n"
+                f"request url:\n{resp.request.url}\n"
+                f"response headers:\n{dict(resp.headers)}\n"
+            )
+E           ValueError: response body:
+E           {"message":"API rate limit exceeded for 181.47.162.94. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)","documentation_url":"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting"}
+E           
+E           request url:
+E           https://api.github.com/repos/mozilla/geckodriver/releases/latest
+E           response headers:
+E           {'Date': 'Fri, 11 Aug 2023 18:46:46 GMT', 'Server': 'Varnish', 'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'deny', 'X-XSS-Protection': '1; mode=block', 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'", 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset', 'Content-Type': 'application/json; charset=utf-8', 'Referrer-Policy': 'origin-when-cross-origin, strict-origin-when-cross-origin', 'X-GitHub-Media-Type': 'github.v3; format=json', 'X-RateLimit-Limit': '60', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1691779912', 'X-RateLimit-Resource': 'core', 'X-RateLimit-Used': '60', 'Content-Length': '279', 'X-GitHub-Request-Id': 'E6A4:5E5D:16E5FD0:180C112:64D68216'}
+
+C:\Users\nicol\AppData\Local\Programs\Python\Python311\Lib\site-packages\webdriver_manager\core\http.py:19: ValueError</error></testcase></testsuite></testsuites>
