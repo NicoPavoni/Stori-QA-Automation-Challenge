@@ -136,3 +136,7 @@ dmypy.json
 
 # XLSX files
 *.xlsx
+
+# Report files
+*.html
+*.xml
