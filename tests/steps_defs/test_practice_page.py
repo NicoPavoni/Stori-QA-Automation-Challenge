@@ -6,7 +6,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from tests.steps_defs.pages.practice_page import PracticePage
+from .pages.practice_page import PracticePage
 
 
 def test_select_country_mexico(driver):

@@ -2,7 +2,7 @@ import pandas as pd
 
 from selenium.webdriver.common.by import By
 
-from tests.steps_defs.pages.base_page import BasePage
+from .base_page import BasePage
 
 
 class DataExtractor(BasePage):

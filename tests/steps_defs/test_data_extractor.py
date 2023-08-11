@@ -1,4 +1,4 @@
-from tests.steps_defs.pages.data_extractor import DataExtractor
+from .pages.data_extractor import DataExtractor
 
 
 def test_save_courses_to_excel(driver):
