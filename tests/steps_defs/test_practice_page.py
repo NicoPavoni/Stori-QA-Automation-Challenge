@@ -53,7 +53,7 @@ def test_switch_tab_example(driver):
     time.sleep(5)
     try:
         EC.visibility_of_element_located(page.get_all_courses_btn())
-        driver.save_screenshot("button-test.png")  # Take screenshot if the button is present
+        driver.save_screenshot("view-all-courses-button.png")  # Take screenshot if the button is present
     except NoSuchElementException:
         print(" Button its not present in the page. ")
     driver.switch_to.window(driver.window_handles[0])
